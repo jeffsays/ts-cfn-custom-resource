@@ -10,30 +10,47 @@
     "custom resource",
     "response"
   ],
-  "main": "index.js",
-  "repository": "git@github.com:jgriepentrog/cfn-custom-resource.git",
+  "main": "src/index.js",
+  "repository": "git@github.com:jeffsays/cfn-custom-resource.git",
   "author": "John Griepentrog",
-  "homepage": "https://github.com/jgriepentrog/cfn-custom-resource",
+  "homepage": "https://github.com/jeffsays/cfn-custom-resource",
   "bugs": {
-    "url": "https://github.com/jgriepentrog/cfn-custom-resource/issues"
+    "url": "https://github.com/jeffsays/cfn-custom-resource/issues"
   },
   "license": "MIT",
-  "private": false,
-  "devDependencies": {
-    "husky": "^8.0.3",
-    "jest": "^29.7.0",
-    "jsdoc-to-markdown": "^8.0.0",
-    "lint-staged": "^15.1.0",
-    "standard": "^17.1.0"
-  },
-  "lint-staged": {
-    "*.js": "npm run lint:fix"
-  },
   "scripts": {
-    "doc": "jsdoc2md index.js > TEMP.MD",
+    "build": "yarn run clean && yarn run build:license-checker && tsc",
+    "build:license-checker": "license-checker --csv --out var/licenses.csv",
+    "clean": "shx rm -rf lib",
+    "doc": "jsdoc2md src/index.ts > TEMP.MD",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "test": "jest",
     "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/license-checker": "^25",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "jsdoc-to-markdown": "^9.1.1",
+    "license-checker": "^25.0.1",
+    "lint-staged": "^15.5.0",
+    "shx": "^0.4.0",
+    "ts-standard": "^12.0.2",
+    "typescript": "^5.8.2"
+  },
+  "lint-staged": {
+    "*.js": "npm run lint:fix"
+  },
+  "packageManager": "yarn@4.0.0",
+  "ts-standard": {
+    "ignore": [
+      ".idea",
+      ".yarn",
+      "node_modules",
+      "lib",
+      "var"
+    ],
+    "project": "./tsconfig.json"
   }
 }

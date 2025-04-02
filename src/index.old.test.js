@@ -3,7 +3,7 @@
 const {
   configure, sendSuccess, sendFailure, sendResponse, SUCCESS, FAILED,
   LOG_NORMAL, LOG_VERBOSE, LOG_DEBUG
-} = require('./index')
+} = require('./index.old')
 
 /* Callback setup */
 const fakeCallback = jest.fn((error, data) => {
