@@ -4,7 +4,7 @@
     "esModuleInterop": true, // Emit additional JavaScript to ease importing CommonJS modules
     "skipLibCheck": true, // Skip type checking of declaration files
     "target": "es2022", // Specify ECMAScript target version
-    "allowJs": true,  // allow to import .js files
+    "allowJs": true, // allow to import .js files
     "resolveJsonModule": true, // allow to import .json files
     // "moduleDetection": "force", // This option forces TypeScript to consider all files as modules. This helps to avoid 'cannot redeclare block-scoped variable' errors.
     "isolatedModules": true, // This option prevents a few TS features which are unsafe when treating modules as isolated files.
@@ -23,8 +23,8 @@
     "allowImportingTsExtensions": false, // can only be used when either 'noEmit' or 'emitDeclarationOnly' is set
     "noEmit": false,
     "sourceMap": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": [ "src/**/*.ts" ],
-  "exclude": [ "node_modules" ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

@@ -7,7 +7,7 @@ import {
   CloudFormationResponseDetails,
   ConfigureOptions,
   LambdaCallback,
-  LambdaContext
+  LambdaContext,
 } from "./types";
 
 import {
@@ -18,31 +18,40 @@ import {
   LOG_DEBUG,
   DEFAULT_PHYSICAL_RESOURCE_ID,
   DEFAULT_REASON_WITH_CONTEXT,
-  DEFAULT_REASON
-} from "./constants.js"
+  DEFAULT_REASON,
+} from "./constants.js";
 
-
-/** Internal options object to hold configuration like logLevel. Initialized to LOG_NORMAL */
+/**
+ * @description
+ *
+ * Internal options object to hold configuration like logLevel. Initialized to LOG_NORMAL
+ */
 const opts: ConfigureOptions = {
-  logLevel: LOG_NORMAL
+  logLevel: LOG_NORMAL,
 };
 
 /**
- * @description Configures the cfn-custom-resource module with the given options.
- * @param {ConfigureOptions} options - The configuration options.
+ * @description
  *
- * @returns {void} No return value.
+ * Configures the cfn-custom-resource module with the given options.
+ *
+ * @param   {ConfigureOptions} options - The configuration options.
+ *
+ * @returns {void}                     No return value.
  */
 export function configure(options: ConfigureOptions): void {
   Object.assign(opts, options);
 }
 
 /**
- * @description Mocks a callback if one is not provided, returning the intended callback value.
- * @param {Error | string | null} error - The error encountered, if any.
- * @param {unknown} result - The result value (if any).
+ * @description
  *
- * @returns {Error | unknown | null} Either an Error, the result, or null.
+ * Mocks a callback if one is not provided, returning the intended callback value.
+ *
+ * @param   {Error | string | null}  error  - The error encountered, if any.
+ * @param   {unknown}                result - The result value (if any).
+ *
+ * @returns {Error | unknown | null}        Either an Error, the result, or null.
  */
 function mockCallback(error: Error | string | null, result: unknown): Error | unknown | null {
   if (error !== null) {
@@ -60,12 +69,16 @@ function mockCallback(error: Error | string | null, result: unknown): Error | un
 }
 
 /**
- * @description Sends a success or failure response to CloudFormation.
- * @param {CloudFormationResponseDetails} responseDetails - Details of the response (Status, Reason, etc.).
- * @param {CloudFormationEvent} event - The CloudFormation custom resource event.
- * @param {LambdaCallback} [callback] - The optional Lambda callback.
+ * @description
  *
- * @returns {Promise<unknown>} Promise that resolves or rejects based on the response result.
+ * Sends a success or failure response to CloudFormation.
+ *
+ * @param   {CloudFormationResponseDetails} responseDetails Details of the response (Status, Reason, etc.).
+ * @param   {CloudFormationEvent}           event           The CloudFormation custom resource event.
+ * @param   {LambdaCallback}                [callback]      The optional Lambda callback.
+ *
+ * @returns {Promise<unknown>}                              Promise that resolves or rejects based on the response
+ *   result.
  */
 export async function sendResponse(
   responseDetails: CloudFormationResponseDetails,
@@ -96,12 +109,15 @@ export async function sendResponse(
 }
 
 /**
- * @description Internal function to send the response to CloudFormation regarding
- * the success/failure of a custom resource deploy.
- * @param {CloudFormationResponseDetails} responseDetails - Details of the response (Status, Reason, etc.).
- * @param {CloudFormationEvent} event - The CloudFormation custom resource event.
+ * @description
  *
- * @returns {Promise<unknown>} Promise that resolves with additional data or null, or rejects if an error.
+ * Internal function to send the response to CloudFormation regarding the success/failure of a custom resource deploy.
+ *
+ * @param   {CloudFormationResponseDetails} responseDetails Details of the response (Status, Reason, etc.).
+ * @param   {CloudFormationEvent}           event           The CloudFormation custom resource event.
+ *
+ * @returns {Promise<unknown>}                              Promise that resolves with additional data or null, or
+ *   rejects if an error.
  */
 async function sendResponseInternal(
   responseDetails: CloudFormationResponseDetails,
@@ -117,9 +133,9 @@ async function sendResponseInternal(
 
   // Ensure "Data" is an object if it exists
   if (
-    typeof responseDetails.Data !== "undefined" &&
-    responseDetails.Data !== null &&
-    typeof responseDetails.Data !== "object"
+    typeof responseDetails.Data !== "undefined"
+    && responseDetails.Data !== null
+    && typeof responseDetails.Data !== "object"
   ) {
     responseDetails.Data = { data: responseDetails.Data };
   }
@@ -155,12 +171,12 @@ async function sendResponseInternal(
     StackId,
     RequestId,
     LogicalResourceId,
-    ...(Data ? { Data } : {})
+    ...(Data ? { Data } : {}),
   });
   const headers = {
     "content-type": "",
-    "content-length": responseBodyStr.length
-  }
+    "content-length": responseBodyStr.length,
+  };
 
   // Some Node.js type definitions do not include "protocol" in https.RequestOptions, so we intersect it.
   const requestOptions: https.RequestOptions & { protocol: string } = {
@@ -168,7 +184,7 @@ async function sendResponseInternal(
     protocol,
     path,
     method: "PUT",
-    headers
+    headers,
   };
 
   if (opts.logLevel >= LOG_VERBOSE) {
@@ -235,12 +251,18 @@ async function sendResponseInternal(
 }
 
 /**
- * @description Sends a success response to CloudFormation, wrapping sendResponse.
- * @param {string} physicalResourceId - The Physical Resource Id for the resource.
- * @param {unknown} data - Additional data to send. If not an object, it is wrapped in `{ data }`.
- * @param {CloudFormationEvent} event - The CloudFormation custom resource event.
- * @param {LambdaCallback} [callback] - The optional Lambda callback.
- * @returns {Promise<unknown>} Promise that resolves with the Data or null, or rejects if an error.
+ * @description
+ *
+ * Sends a success response to CloudFormation, wrapping sendResponse.
+ *
+ * @param   {string}              physicalResourceId - The Physical Resource Id for the resource.
+ * @param   {unknown}             data               - Additional data to send. If not an object, it is wrapped in `{
+ *   data }`.
+ * @param   {CloudFormationEvent} event              - The CloudFormation custom resource event.
+ * @param   {LambdaCallback}      [callback]         - The optional Lambda callback.
+ *
+ * @returns {Promise<unknown>}                       Promise that resolves with the Data or null, or rejects if an
+ *   error.
  */
 export async function sendSuccess(
   physicalResourceId: string,
@@ -253,7 +275,7 @@ export async function sendSuccess(
       Status: SUCCESS,
       Reason: "",
       PhysicalResourceId: physicalResourceId,
-      Data: data
+      Data: data,
     },
     event,
     callback
@@ -261,13 +283,19 @@ export async function sendSuccess(
 }
 
 /**
- * @description Sends a failure response to CloudFormation, wrapping sendResponse.
- * @param {string | Error | undefined} reason - The reason for the failure. Defaults if not provided.
- * @param {CloudFormationEvent} event - The CloudFormation custom resource event.
- * @param {LambdaCallback} [callback] - The optional Lambda callback.
- * @param {LambdaContext} [context] - The Lambda context (used for a more helpful default reason).
- * @param {string} [physicalResourceId] - Overrides the Physical Resource Id for the response.
- * @returns {Promise<unknown>} Promise that resolves or rejects based on the response result.
+ * @description
+ *
+ * Sends a failure response to CloudFormation, wrapping sendResponse.
+ *
+ * @param   {string | Error | undefined} reason               The reason for the failure. Defaults if not provided.
+ * @param   {CloudFormationEvent}        event                The CloudFormation custom resource event.
+ * @param   {LambdaCallback}             [callback]           The optional Lambda callback.
+ * @param   {LambdaContext}              [context]            The Lambda context (used for a more helpful default
+ *   reason).
+ * @param   {string}                     [physicalResourceId] Overrides the Physical Resource Id for the response.
+ *
+ * @returns {Promise<unknown>}                                Promise that resolves or rejects based on the response
+ *   result.
  */
 export async function sendFailure(
   reason: string | Error | undefined,
@@ -276,14 +304,11 @@ export async function sendFailure(
   context?: LambdaContext,
   physicalResourceId?: string
 ): Promise<unknown> {
-  const defaultReason: string = context
-    ? `${DEFAULT_REASON_WITH_CONTEXT}${context.logStreamName}`
-    : DEFAULT_REASON;
+  const defaultReason: string = context ? `${DEFAULT_REASON_WITH_CONTEXT}${context.logStreamName}` : DEFAULT_REASON;
 
   const finalReason: string | Error = reason ?? defaultReason;
 
-  const defaultPhysicalResourceId: string =
-    event.PhysicalResourceId ?? DEFAULT_PHYSICAL_RESOURCE_ID;
+  const defaultPhysicalResourceId: string = event.PhysicalResourceId ?? DEFAULT_PHYSICAL_RESOURCE_ID;
 
   const finalPhysicalResourceId: string = physicalResourceId ?? defaultPhysicalResourceId;
 
@@ -295,7 +320,7 @@ export async function sendFailure(
     {
       Status: FAILED,
       Reason: finalReason,
-      PhysicalResourceId: finalPhysicalResourceId
+      PhysicalResourceId: finalPhysicalResourceId,
     },
     event,
     callback
