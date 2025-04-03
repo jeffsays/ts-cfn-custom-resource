@@ -20,11 +20,11 @@ jobs:
           fetch-depth: "0"
       - name: corepack enable
         run: corepack enable
-      - name: Update yarn
+      - name: Set yarn version
         run: |
           yarnVersion=$(jq -r ".packageManager" package.json | sed "s/^[^:]*@//")
           yarn set version "${yarnVersion}"
-      - name: Yarn version
+      - name: Verify yarn version
         run: yarn --version
       - name: Generate simple .yarnrc.yml
         run: |
