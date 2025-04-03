@@ -602,25 +602,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jeffsays/cfn-custom-resource-ts@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@jeffsays/cfn-custom-resource-ts@workspace:."
-  dependencies:
-    "@jeffsays/prettier": "npm:^0.0.14"
-    "@types/jest": "npm:^29.5.14"
-    "@types/license-checker": "npm:^25"
-    husky: "npm:^9.1.7"
-    jest: "npm:^29.7.0"
-    jsdoc-to-markdown: "npm:^9.1.1"
-    license-checker: "npm:^25.0.1"
-    lint-staged: "npm:^15.5.0"
-    shx: "npm:^0.4.0"
-    ts-jest: "npm:^29.3.1"
-    tsx: "npm:^4.19.3"
-    typescript: "npm:^5.8.2"
-  languageName: unknown
-  linkType: soft
-
 "@jeffsays/prettier@npm:^0.0.14":
   version: 0.0.14
   resolution: "@jeffsays/prettier@npm:0.0.14"
@@ -643,6 +624,25 @@ __metadata:
   checksum: 7a541a0f3ecdbd8f356b5cf45a6e7f0fb45a56c2b4d59cf8cb3203898332c80bf308eb08e8f6cf6b1706cbbe71d1f83f38df4a53cb37bfa8648c61f07415b85a
   languageName: node
   linkType: hard
+
+"@jeffsays/ts-cfn-custom-resource@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@jeffsays/ts-cfn-custom-resource@workspace:."
+  dependencies:
+    "@jeffsays/prettier": "npm:^0.0.14"
+    "@types/jest": "npm:^29.5.14"
+    "@types/license-checker": "npm:^25"
+    husky: "npm:^9.1.7"
+    jest: "npm:^29.7.0"
+    jsdoc-to-markdown: "npm:^9.1.1"
+    license-checker: "npm:^25.0.1"
+    lint-staged: "npm:^15.5.0"
+    shx: "npm:^0.4.0"
+    ts-jest: "npm:^29.3.1"
+    tsx: "npm:^4.19.3"
+    typescript: "npm:^5.8.2"
+  languageName: unknown
+  linkType: soft
 
 "@jest/console@npm:^29.7.0":
   version: 29.7.0

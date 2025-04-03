@@ -1,5 +1,5 @@
 {
-  "name": "@jeffsays/cfn-custom-resource-ts",
+  "name": "@jeffsays/ts-cfn-custom-resource",
   "version": "0.0.2",
   "description": "Node.js module providing utility functions for AWS Cloudformation Custom Resources.",
   "keywords": [
@@ -10,11 +10,11 @@
     "custom resource",
     "response"
   ],
-  "homepage": "https://github.com/jeffsays/cfn-custom-resource",
+  "homepage": "https://github.com/jeffsays/ts-cfn-custom-resource",
   "bugs": {
-    "url": "https://github.com/jeffsays/cfn-custom-resource/issues"
+    "url": "https://github.com/jeffsays/ts-cfn-custom-resource/issues"
   },
-  "repository": "git@github.com:jeffsays/cfn-custom-resource.git",
+  "repository": "git@github.com:jeffsays/ts-cfn-custom-resource.git",
   "license": "MIT",
   "author": "Jeff Beck",
   "main": "lib/index.js",
