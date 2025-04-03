@@ -219,21 +219,21 @@ async function sendResponseInternal(
     request.write(responseBodyStr);
     request.end();
   })
-  .then(() => {
-    if (Status === FAILED) {
-      // Throw the reason string if we have one; otherwise, throw a generic error
-      throw Reason ?? new Error("Failed status with no reason provided.");
-    }
-    if (typeof Data !== "undefined" && Data !== null) {
-      return Data;
-    }
-    return null;
-  })
-  .catch(err => {
-    const debugString = `CRITICAL: Error sending response due to: [${String(err)}]`;
-    console.log(opts.logLevel >= LOG_DEBUG ? err : debugString);
-    throw err;
-  });
+    .then(() => {
+      if (Status === FAILED) {
+        // Throw the reason string if we have one; otherwise, throw a generic error
+        throw Reason ?? new Error("Failed status with no reason provided.");
+      }
+      if (typeof Data !== "undefined" && Data !== null) {
+        return Data;
+      }
+      return null;
+    })
+    .catch((err) => {
+      const debugString = `CRITICAL: Error sending response due to: [${String(err)}]`;
+      console.log(opts.logLevel >= LOG_DEBUG ? err : debugString);
+      throw err;
+    });
 }
 
 /**
