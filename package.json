@@ -1,6 +1,6 @@
 {
   "name": "@jeffsays/cfn-custom-resource-ts",
-  "version": "5.0.16",
+  "version": "0.0.0",
   "description": "Node.js module providing utility functions for AWS Cloudformation Custom Resources.",
   "keywords": [
     "aws",
@@ -23,8 +23,6 @@
     "build:license-checker": "license-checker --csv --out var/licenses.csv",
     "clean": "shx rm -rf lib",
     "doc": "jsdoc2md src/index.ts > TEMP.MD",
-    "lint": "ts-standard",
-    "lint:fix": "ts-standard --fix",
     "prepare": "husky install",
     "prettier:check": "node --import tsx node_modules/prettier/bin/prettier.cjs . --check",
     "prettier:list-different": "node --import tsx node_modules/prettier/bin/prettier.cjs . --list-different",
@@ -32,7 +30,7 @@
     "test": "jest"
   },
   "lint-staged": {
-    "*.js": "npm run lint:fix"
+    "*": "yarn run prettier:write"
   },
   "prettier": "@jeffsays/prettier",
   "devDependencies": {
