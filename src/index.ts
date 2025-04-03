@@ -19,7 +19,7 @@ import {
   DEFAULT_PHYSICAL_RESOURCE_ID,
   DEFAULT_REASON_WITH_CONTEXT,
   DEFAULT_REASON,
-} from "./constants.js";
+} from "./constants";
 
 /**
  * @description
@@ -154,11 +154,7 @@ async function sendResponseInternal(
 
   try {
     respUrl = new URL(ResponseURL);
-  } catch (urlError: unknown) {
-    if (urlError instanceof Error) {
-      urlError.message = `CRITICAL: Error parsing URL due to: [${urlError.message}]`;
-      throw urlError;
-    }
+  } catch (urlError) {
     throw new Error(String(urlError));
   }
 
@@ -223,31 +219,21 @@ async function sendResponseInternal(
     request.write(responseBodyStr);
     request.end();
   })
-    .then(() => {
-      if (Status === FAILED) {
-        // Throw the reason string if we have one; otherwise, throw a generic error
-        throw Reason ?? new Error("Failed status with no reason provided.");
-      }
-      if (typeof Data !== "undefined" && Data !== null) {
-        return Data;
-      }
-      return null;
-    })
-    .catch((err: unknown) => {
-      if (err instanceof Error) {
-        err.message = `CRITICAL: Error sending response due to: [${err.message}]`;
-        if (opts.logLevel >= LOG_DEBUG) {
-          console.log(err);
-        } else {
-          console.log(err.message);
-        }
-        throw err;
-      }
-      const unknownError = new Error(String(err));
-      unknownError.message = `CRITICAL: Error sending response due to: [${unknownError.message}]`;
-      console.log(unknownError.message);
-      throw unknownError;
-    });
+  .then(() => {
+    if (Status === FAILED) {
+      // Throw the reason string if we have one; otherwise, throw a generic error
+      throw Reason ?? new Error("Failed status with no reason provided.");
+    }
+    if (typeof Data !== "undefined" && Data !== null) {
+      return Data;
+    }
+    return null;
+  })
+  .catch(err => {
+    const debugString = `CRITICAL: Error sending response due to: [${String(err)}]`;
+    console.log(opts.logLevel >= LOG_DEBUG ? err : debugString);
+    throw err;
+  });
 }
 
 /**

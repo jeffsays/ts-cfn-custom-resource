@@ -1,0 +1,60 @@
+/**
+ * @file index.test.ts
+ * @description Jest tests for the cfn-custom-resource module's TypeScript conversion.
+ */
+
+import {
+  CREATE,
+  UPDATE,
+  DELETE,
+  SUCCESS,
+  FAILED,
+  DEFAULT_PHYSICAL_RESOURCE_ID
+} from "./constants"; // Adjust path as needed
+
+import {
+  configure,
+  sendResponse,
+  sendSuccess,
+  sendFailure,
+} from "./index";
+
+describe("cfn-custom-resource TypeScript Module", () => {
+  it("should export correct constants", () => {
+    expect(CREATE).toBe("Create");
+    expect(UPDATE).toBe("Update");
+    expect(DELETE).toBe("Delete");
+    expect(SUCCESS).toBe("SUCCESS");
+    expect(FAILED).toBe("FAILED");
+    expect(DEFAULT_PHYSICAL_RESOURCE_ID).toBe("NOIDPROVIDED");
+  });
+
+  it("should allow configuring log level without error", () => {
+    // No errors expected, just verifying it runs
+    configure({ logLevel: 3 });
+    expect(true).toBe(true);
+  });
+
+  it("should handle sendSuccess call (mocked example)", async () => {
+    // A mock event
+    const mockEvent = {
+      StackId: "stack-id",
+      RequestId: "request-id",
+      LogicalResourceId: "logical-id",
+      ResponseURL: "https://example.com",
+      PhysicalResourceId: "physical-id"
+    };
+
+    // Because we are not actually sending an HTTPS request here,
+    // you'd typically mock or spy on https.request or pass a dummy URL.
+    // For demonstration, we just want to see if it rejects or resolves.
+
+    await expect(
+      sendSuccess("physical-resource-id", { foo: "bar" }, mockEvent)
+    ).rejects.toThrow(/Error parsing URL/);
+    // Explanation: "https://example.com" alone might work in real code,
+    // but you’d need to ensure that the test environment actually handles
+    // an external call or you can mock it. This is just an example to show
+    // how you might wrap the call in an expect.
+  });
+});

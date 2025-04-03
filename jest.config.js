@@ -1,3 +1,4 @@
+/** @type {import('jest').Config} */
 const config = {
   collectCoverage: true,
   coverageThreshold: {
@@ -8,6 +9,12 @@ const config = {
       statements: 90,
     },
   },
+  testMatch: ["**/__tests__/**/*.+(ts|tsx)", "**/?(*.)+(spec|test).+(ts|tsx)"],
+  transform: {
+    "^.+\\.ts$": "ts-jest"
+  },
+  // For Node-based projects:
+  testEnvironment: "node",
 };
 
 module.exports = config;
