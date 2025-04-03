@@ -19,8 +19,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: "0"
+      - name: corepack enable
+        run: corepack enable
       - name: Update yarn
-        run: yarn set version 4.1.0
+        run: |
+          yarnVersion=$(jq -r ".packageManager" package.json | sed "s/^[^:]*@//")
+          yarn set version "${yarnVersion}"
       - name: Yarn version
         run: yarn --version
       - name: Generate simple .yarnrc.yml
