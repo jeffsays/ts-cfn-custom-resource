@@ -19,11 +19,7 @@ const { configure, sendSuccess, sendFailure, sendResponse, LOG_VERBOSE, SUCCESS 
 /* Increase the logging level */
 configure({ logLevel: LOG_VERBOSE });
 
-/**
- * @description
- *
- * Do resource creation
- */
+/** Do resource creation */
 
 /* Resource successfully created! - async/await */
 const result = await sendSuccess(id, { ImportantInfo: otherId }, event);

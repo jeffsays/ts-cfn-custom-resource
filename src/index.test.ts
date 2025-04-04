@@ -1,6 +1,7 @@
 /**
+ * Jest tests for the cfn-custom-resource module.
+ *
  * @file index.test.ts
- * @description Jest tests for the cfn-custom-resource module.
  */
 
 import {
@@ -12,15 +13,10 @@ import {
   DEFAULT_PHYSICAL_RESOURCE_ID,
   LOG_NORMAL,
   LOG_VERBOSE,
-  LOG_DEBUG
+  LOG_DEBUG,
 } from "./constants"; // Adjust path as needed
 
-import {
-  configure,
-  sendResponse,
-  sendSuccess,
-  sendFailure,
-} from "./index";
+import { configure, sendResponse, sendSuccess, sendFailure } from "./index";
 
 // Define our fake callback with typed parameters.
 const fakeCallback = jest.fn((error: Error | null, data?: unknown) => {
@@ -32,7 +28,6 @@ const fakeCallback = jest.fn((error: Error | null, data?: unknown) => {
 
 // A fake context, used for testing reason injection
 const fakeContext = { logStreamName: "fake-logs-1df372" };
-
 
 // Common constants for events, IDs, reasons, etc.
 const fakeStackId = "f3a936";
@@ -52,7 +47,7 @@ const fakeEvent = {
   StackId: fakeStackId,
   RequestId: fakeReqId,
   LogicalResourceId: fakeLogicalResourceId,
-  ResponseURL: fakeRespURL
+  ResponseURL: fakeRespURL,
 };
 
 // Variations of the fake event
@@ -63,53 +58,53 @@ const notExistFakeEvent = { ...fakeEvent, ResponseURL: notExistFakeRespURL };
 type responseDetails = {
   Status: "SUCCESS" | "FAILED";
   PhysicalResourceId: string;
-}
+};
 
 // Successful response details
 const successRespDetails: responseDetails = {
   Status: SUCCESS,
-  PhysicalResourceId: fakePhysicalResourceId
+  PhysicalResourceId: fakePhysicalResourceId,
 };
 
 const successRespDetailsWithData = {
   ...successRespDetails,
-  Data: { test: "I'm some data" }
+  Data: { test: "I'm some data" },
 };
 
 const strData = "I'm some data";
 const successRespDetailsWithStrData = {
   ...successRespDetails,
-  Data: strData
+  Data: strData,
 };
 
 type ohno = {
   ohno: string;
-}
+};
 
 interface failedResponse extends responseDetails {
-  Reason: string | Error | undefined
+  Reason: string | Error | undefined;
 }
 
 // Failed response details
 const failedRespDetailsNoReason = {
   Status: FAILED,
-  PhysicalResourceId: fakePhysicalResourceId
+  PhysicalResourceId: fakePhysicalResourceId,
 };
 
 const failedRespDetails: failedResponse = {
   ...failedRespDetailsNoReason,
-  Reason: fakeReason
+  Reason: fakeReason,
 };
 
 const failedRespDetailsObjReason: failedResponse = {
   ...failedRespDetailsNoReason,
   // @ts-ignore
-  Reason: fakeReasonObj
+  Reason: fakeReasonObj,
 };
 
 const failedRespDetailsErrorReason: failedResponse = {
   ...failedRespDetailsNoReason,
-  Reason: fakeReasonError
+  Reason: fakeReasonError,
 };
 
 // Error references
@@ -136,18 +131,17 @@ expect.extend({
   toBeAnError(received: unknown) {
     // "Duck typing" to check if it's an Error instance
     const pass =
-      !!received &&
-      typeof received === "object" &&
-      "message" in received &&
-      "stack" in received &&
-      (received as Error).constructor.name.includes("Error");
+      !!received
+      && typeof received === "object"
+      && "message" in received
+      && "stack" in received
+      && (received as Error).constructor.name.includes("Error");
 
     return {
       pass,
-      message: (): string =>
-        `Expected ${received} ${pass ? "not " : ""}to be an Error`
+      message: (): string => `Expected ${received} ${pass ? "not " : ""}to be an Error`,
     };
-  }
+  },
 });
 
 describe("cfn-custom-resource TypeScript Module", () => {
@@ -194,7 +188,7 @@ describe("Proper Success sendResponses", () => {
     expect.assertions(1);
     return expect(sendResponse(successRespDetails, fakeEvent, fakeCallback)).resolves.toEqual({
       data: null,
-      error: null
+      error: null,
     });
   });
 
@@ -205,11 +199,9 @@ describe("Proper Success sendResponses", () => {
 
   test("Resolved Promise => { error: null, data } for success response with data", () => {
     expect.assertions(1);
-    return expect(
-      sendResponse(successRespDetailsWithData, fakeEvent, fakeCallback)
-    ).resolves.toEqual({
+    return expect(sendResponse(successRespDetailsWithData, fakeEvent, fakeCallback)).resolves.toEqual({
       error: null,
-      data: successRespDetailsWithData.Data
+      data: successRespDetailsWithData.Data,
     });
   });
 
@@ -222,18 +214,16 @@ describe("Proper Success sendResponses", () => {
 
   test("Resolved Promise => { error: null, data: { data: string } } if non-object data", () => {
     expect.assertions(1);
-    return expect(
-      sendResponse(successRespDetailsWithStrData, fakeEvent, fakeCallback)
-    ).resolves.toEqual({
+    return expect(sendResponse(successRespDetailsWithStrData, fakeEvent, fakeCallback)).resolves.toEqual({
       error: null,
-      data: { data: strData }
+      data: { data: strData },
     });
   });
 
   test("Resolved Promise => { data: string } if no callback and non-object data", () => {
     expect.assertions(1);
     return expect(sendResponse(successRespDetailsWithStrData, fakeEvent)).resolves.toEqual({
-      data: strData
+      data: strData,
     });
   });
 });
@@ -241,9 +231,7 @@ describe("Proper Success sendResponses", () => {
 describe("Improper Success sendResponses", () => {
   test("Resolved => error (callback) if success but bad response URL", () => {
     expect.assertions(1);
-    return expect(
-      sendResponse(successRespDetails, badFakeEvent, fakeCallback)
-    ).resolves.toBeAnError()
+    return expect(sendResponse(successRespDetails, badFakeEvent, fakeCallback)).resolves.toBeAnError();
   });
 
   test("Resolved => throw if success but bad response URL (no callback)", () => {
@@ -253,9 +241,7 @@ describe("Improper Success sendResponses", () => {
 
   test("Resolved => error (callback) if success but non-existent response URL", () => {
     expect.assertions(1);
-    return expect(
-      sendResponse(successRespDetails, notExistFakeEvent, fakeCallback)
-    ).resolves.toBeAnError()
+    return expect(sendResponse(successRespDetails, notExistFakeEvent, fakeCallback)).resolves.toBeAnError();
   });
 
   test("Resolved => throw if success but non-existent response URL (no callback)", () => {
@@ -272,10 +258,7 @@ describe("Proper Failed sendResponses", () => {
 
   test("Resolved => { error: JSON.stringified(reasonObj) } to callback for object reason", () => {
     expect.assertions(1);
-    return expect(
-      sendResponse(failedRespDetailsObjReason, fakeEvent, fakeCallback)
-    ).resolves
-      .toBeAnError()
+    return expect(sendResponse(failedRespDetailsObjReason, fakeEvent, fakeCallback)).resolves.toBeAnError();
     //   .toEqual({
     //   error: failedRespDetailsObjReason.Reason
     // });
@@ -283,9 +266,7 @@ describe("Proper Failed sendResponses", () => {
 
   test("Resolved => { error: JSON.stringified(reasonError.stack) } to callback for Error reason", () => {
     expect.assertions(1);
-    return expect(
-      sendResponse(failedRespDetailsErrorReason, fakeEvent, fakeCallback)
-    ).resolves.toBeAnError() // ({error: fakeReasonError})
+    return expect(sendResponse(failedRespDetailsErrorReason, fakeEvent, fakeCallback)).resolves.toBeAnError(); // ({error: fakeReasonError})
     //  ) .resolves.toEqual(
     //   {error: failedRespDetailsErrorReason.Reason}
     // );
@@ -302,7 +283,7 @@ describe("Proper sendSuccesses", () => {
     expect.assertions(1);
     return expect(sendSuccess(fakePhysicalResourceId, null, fakeEvent, fakeCallback)).resolves.toEqual({
       data: null,
-      error: null
+      error: null,
     });
   });
 
@@ -312,7 +293,7 @@ describe("Proper sendSuccesses", () => {
       sendSuccess(fakePhysicalResourceId, successRespDetailsWithData.Data, fakeEvent, fakeCallback)
     ).resolves.toEqual({
       error: null,
-      data: successRespDetailsWithData.Data
+      data: successRespDetailsWithData.Data,
     });
   });
 });
@@ -334,15 +315,17 @@ describe("Proper sendFailures", () => {
 
   test("Resolved => { error: reason } to callback (omitting context param)", () => {
     expect.assertions(1);
-    return expect(sendFailure(fakeReason, fakeEvent, fakeCallback, fakePhysicalResourceId as any))
-      .resolves.toEqual(fakeReasonError);
+    return expect(sendFailure(fakeReason, fakeEvent, fakeCallback, fakePhysicalResourceId as any)).resolves.toEqual(
+      fakeReasonError
+    );
   });
 
   test("Resolved => throw if no callback (omitting context param)", () => {
     expect.assertions(1);
     // @ts-ignore null intentional
-    return expect(sendFailure(fakeReason, fakeEvent, null as any, null, fakePhysicalResourceId))
-      .resolves.toThrow(fakeReasonError);
+    return expect(sendFailure(fakeReason, fakeEvent, null as any, null, fakePhysicalResourceId)).resolves.toThrow(
+      fakeReasonError
+    );
   });
 
   test("Resolved => { error: reasonContextErrorMsg } if reason is null and context is provided", () => {
@@ -372,8 +355,9 @@ describe("Proper sendFailures", () => {
   test("Resolved => throw with reasonDefaultError if no callback, reason is null, and no context provided", () => {
     expect.assertions(1);
     // @ts-ignore null intentional
-    return expect(sendFailure(null, fakeEvent, null as any, null, fakePhysicalResourceId))
-      .resolves.toThrow(reasonDefaultError);
+    return expect(sendFailure(null, fakeEvent, null as any, null, fakePhysicalResourceId)).resolves.toThrow(
+      reasonDefaultError
+    );
   });
 
   test("Uses default physical resource ID if not provided, logs it at debug level, returns error to callback", () => {

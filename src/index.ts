@@ -21,18 +21,12 @@ import {
   DEFAULT_REASON,
 } from "./constants";
 
-/**
- * @description
- *
- * Internal options object to hold configuration like logLevel. Initialized to LOG_NORMAL
- */
+/** Internal options object to hold configuration like logLevel. Initialized to LOG_NORMAL */
 const opts: ConfigureOptions = {
   logLevel: LOG_NORMAL,
 };
 
 /**
- * @description
- *
  * Configures the cfn-custom-resource module with the given options.
  *
  * @param   {ConfigureOptions} options - The configuration options.
@@ -44,8 +38,6 @@ export function configure(options: ConfigureOptions): void {
 }
 
 /**
- * @description
- *
  * Mocks a callback if one is not provided, returning the intended callback value.
  *
  * @param   {Error | string | null}  error  - The error encountered, if any.
@@ -69,8 +61,6 @@ function mockCallback(error: Error | string | null, result: unknown): Error | un
 }
 
 /**
- * @description
- *
  * Sends a success or failure response to CloudFormation.
  *
  * @param   {CloudFormationResponseDetails} responseDetails Details of the response (Status, Reason, etc.).
@@ -109,8 +99,6 @@ export async function sendResponse(
 }
 
 /**
- * @description
- *
  * Internal function to send the response to CloudFormation regarding the success/failure of a custom resource deploy.
  *
  * @param   {CloudFormationResponseDetails} responseDetails Details of the response (Status, Reason, etc.).
@@ -237,8 +225,6 @@ async function sendResponseInternal(
 }
 
 /**
- * @description
- *
  * Sends a success response to CloudFormation, wrapping sendResponse.
  *
  * @param   {string}              physicalResourceId - The Physical Resource Id for the resource.
@@ -269,8 +255,6 @@ export async function sendSuccess(
 }
 
 /**
- * @description
- *
  * Sends a failure response to CloudFormation, wrapping sendResponse.
  *
  * @param   {string | Error | undefined} reason               The reason for the failure. Defaults if not provided.

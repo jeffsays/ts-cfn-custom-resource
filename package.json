@@ -34,20 +34,20 @@
     "publish:minor": "yarn version minor && yarn publish:sync",
     "publish:patch": "yarn version patch && yarn publish:sync",
     "publish:sync": "yarn run git:commit && yarn run git:tag && yarn git:push",
+    "test": "jest",
     "version:feature": "yarn version ${npm_package_version}-$0.$(git describe | rev | cut -d '-' -f 2 | rev).g$(git rev-parse --short HEAD)",
     "version:major": "yarn version --new-version major",
     "version:minor": "yarn version --new-version minor",
     "version:patch": "yarn version --new-version patch",
     "version:prepatch": "yarn version --new-version prepatch",
-    "version:prerelease": "yarn version ${npm_package_version}",
-    "test": "jest"
+    "version:prerelease": "yarn version ${npm_package_version}"
   },
   "lint-staged": {
     "*": "yarn run prettier:write"
   },
   "prettier": "@jeffsays/prettier",
   "devDependencies": {
-    "@jeffsays/prettier": "^0.0.14",
+    "@jeffsays/prettier": "^0.0.15",
     "@types/jest": "^29.5.14",
     "@types/license-checker": "^25",
     "husky": "^9.1.7",
