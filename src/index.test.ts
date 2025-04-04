@@ -77,12 +77,8 @@ const successRespDetailsWithStrData = {
   Data: strData,
 };
 
-type ohno = {
-  ohno: string;
-};
-
 interface failedResponse extends responseDetails {
-  Reason: string | Error | undefined;
+  Reason: string | Error;
 }
 
 // Failed response details

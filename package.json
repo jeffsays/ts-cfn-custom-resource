@@ -48,6 +48,7 @@
   "prettier": "@jeffsays/prettier",
   "devDependencies": {
     "@jeffsays/prettier": "^0.0.15",
+    "@jeffsays/tsconfig": "^0.0.1",
     "@types/jest": "^29.5.14",
     "@types/license-checker": "^25",
     "husky": "^9.1.7",

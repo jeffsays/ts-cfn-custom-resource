@@ -630,6 +630,7 @@ __metadata:
   resolution: "@jeffsays/ts-cfn-custom-resource@workspace:."
   dependencies:
     "@jeffsays/prettier": "npm:^0.0.15"
+    "@jeffsays/tsconfig": "npm:^0.0.1"
     "@types/jest": "npm:^29.5.14"
     "@types/license-checker": "npm:^25"
     husky: "npm:^9.1.7"
@@ -643,6 +644,13 @@ __metadata:
     typescript: "npm:^5.8.2"
   languageName: unknown
   linkType: soft
+
+"@jeffsays/tsconfig@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@jeffsays/tsconfig@npm:0.0.1"
+  checksum: 10c0/64f656296693190de866bd53a70e885f72d2576438ef00b9c4c0629cecd7f547e82f31ae48a0d6140c7e3366b1662fc4f59aafed6d929fd33069be7fce69eb6b
+  languageName: node
+  linkType: hard
 
 "@jest/console@npm:^29.7.0":
   version: 29.7.0

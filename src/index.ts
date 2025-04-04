@@ -2,7 +2,7 @@
 
 import * as https from "https";
 import { URL } from "node:url";
-import {
+import type {
   CloudFormationEvent,
   CloudFormationResponseDetails,
   ConfigureOptions,
@@ -31,7 +31,7 @@ const opts: ConfigureOptions = {
  *
  * @param   {ConfigureOptions} options - The configuration options.
  *
- * @returns {void}                     No return value.
+ * @returns                      No return value.
  */
 export function configure(options: ConfigureOptions): void {
   Object.assign(opts, options);
