@@ -4,14 +4,8 @@
   "compilerOptions": {
     "outDir": "./lib",
     //    "exactOptionalPropertyTypes": false,
-    "verbatimModuleSyntax": false,
+    "verbatimModuleSyntax": false
   },
   "include": ["src/**/*.ts"],
-  "exclude": [
-    "bin/**",
-    "dist/**",
-    "lib/**",
-    "**/node_modules/**",
-    "/.yarn/**"
-  ]
+  "exclude": ["bin/**", "dist/**", "lib/**", "**/node_modules/**", "/.yarn/**"]
 }

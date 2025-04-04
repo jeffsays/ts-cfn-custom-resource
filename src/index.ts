@@ -31,7 +31,7 @@ const opts: ConfigureOptions = {
  *
  * @param   {ConfigureOptions} options - The configuration options.
  *
- * @returns                      No return value.
+ * @returns         No return value.
  */
 export function configure(options: ConfigureOptions): void {
   Object.assign(opts, options);
