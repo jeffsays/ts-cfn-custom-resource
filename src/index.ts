@@ -11,6 +11,9 @@ import type {
 } from "./types";
 
 import {
+  CREATE,
+  UPDATE,
+  DELETE,
   SUCCESS,
   FAILED,
   LOG_NORMAL,
@@ -307,6 +310,9 @@ export {
   ConfigureOptions,
   LambdaCallback,
   LambdaContext,
+  CREATE,
+  UPDATE,
+  DELETE,
   SUCCESS,
   FAILED,
   LOG_NORMAL,
