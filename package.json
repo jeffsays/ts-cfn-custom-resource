@@ -55,6 +55,9 @@
     "*": "yarn run prettier:write"
   },
   "prettier": "@jeffsays/prettier",
+  "dependencies": {
+    "@types/aws-lambda": "^8.10.149"
+  },
   "devDependencies": {
     "@jeffsays/prettier": "^0.0.15",
     "@jeffsays/tsconfig": "^0.0.1",

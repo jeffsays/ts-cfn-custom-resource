@@ -8,6 +8,8 @@ import type {
   ConfigureOptions,
   LambdaCallback,
   LambdaContext,
+  Context,
+  CloudFormationCustomResourceEvent
 } from "./types";
 
 import {
@@ -305,11 +307,6 @@ export {
   sendResponse,
   sendSuccess,
   sendFailure,
-  CloudFormationEvent,
-  CloudFormationResponseDetails,
-  ConfigureOptions,
-  LambdaCallback,
-  LambdaContext,
   CREATE,
   UPDATE,
   DELETE,
@@ -321,4 +318,14 @@ export {
   DEFAULT_PHYSICAL_RESOURCE_ID,
   DEFAULT_REASON_WITH_CONTEXT,
   DEFAULT_REASON,
+}
+
+export type {
+  CloudFormationEvent,
+  CloudFormationResponseDetails,
+  ConfigureOptions,
+  LambdaCallback,
+  LambdaContext,
+  Context,
+  CloudFormationCustomResourceEvent
 }

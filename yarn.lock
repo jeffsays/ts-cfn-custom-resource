@@ -631,6 +631,7 @@ __metadata:
   dependencies:
     "@jeffsays/prettier": "npm:^0.0.15"
     "@jeffsays/tsconfig": "npm:^0.0.1"
+    "@types/aws-lambda": "npm:^8.10.149"
     "@types/jest": "npm:^29.5.14"
     "@types/license-checker": "npm:^25"
     husky: "npm:^9.1.7"
@@ -1018,6 +1019,13 @@ __metadata:
   dependencies:
     "@sinonjs/commons": "npm:^3.0.0"
   checksum: 10c0/2e2fb6cc57f227912814085b7b01fede050cd4746ea8d49a1e44d5a0e56a804663b0340ae2f11af7559ea9bf4d087a11f2f646197a660ea3cb04e19efc04aa63
+  languageName: node
+  linkType: hard
+
+"@types/aws-lambda@npm:^8.10.149":
+  version: 8.10.149
+  resolution: "@types/aws-lambda@npm:8.10.149"
+  checksum: 10c0/9ef41214a1b69fa30d89cab575429793f1ccc49cfe3a7aa75228aef31a202bb6d2c306a5b33def61ef29e0d0a1a324412bf6a4fa5a615e61117685584a394047
   languageName: node
   linkType: hard
 

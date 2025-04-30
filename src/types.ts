@@ -1,21 +1,21 @@
 /** @file Provides TypeScript type definitions for the cfn-custom-resource module. */
 
 /** Options to configure the cfn-custom-resource module. */
-export interface ConfigureOptions {
+interface ConfigureOptions {
   logLevel: number;
 }
 
 /** Represents the AWS Lambda context, needed mainly for accessing the log stream name */
-export interface LambdaContext {
+interface LambdaContext {
   /** The name of the CloudWatch log stream. */
   logStreamName: string;
 }
 
 /** The callback signature for Lambda functions. */
-export type LambdaCallback = (error: Error | null, result?: unknown) => unknown;
+type LambdaCallback = (error: Error | null, result?: unknown) => unknown;
 
 /** Defines the shape of CloudFormation's custom resource event object relevant to sending status back to CloudFormation. */
-export interface CloudFormationEvent {
+interface CloudFormationEvent {
   /** The ARN that identifies the stack. */
   StackId: string;
 
@@ -33,7 +33,7 @@ export interface CloudFormationEvent {
 }
 
 /** Defines the details that must be sent in the response to CloudFormation. */
-export interface CloudFormationResponseDetails {
+interface CloudFormationResponseDetails {
   /** Must be either "SUCCESS" or "FAILED" */
   Status: "SUCCESS" | "FAILED";
 
@@ -46,3 +46,7 @@ export interface CloudFormationResponseDetails {
   /** Additional data to send back to CloudFormation, if needed. */
   Data?: unknown;
 }
+
+import type { Context, CloudFormationCustomResourceEvent } from "aws-lambda";
+
+export type { ConfigureOptions, LambdaContext, LambdaCallback, CloudFormationEvent, CloudFormationResponseDetails, Context, CloudFormationCustomResourceEvent };
