@@ -33,7 +33,7 @@ const opts: ConfigureOptions = {
  *
  * @returns         No return value.
  */
-export function configure(options: ConfigureOptions): void {
+function configure(options: ConfigureOptions): void {
   Object.assign(opts, options);
 }
 
@@ -70,7 +70,7 @@ function mockCallback(error: Error | string | null, result: unknown): Error | un
  * @returns {Promise<unknown>}                              Promise that resolves or rejects based on the response
  *   result.
  */
-export async function sendResponse(
+async function sendResponse(
   responseDetails: CloudFormationResponseDetails,
   event: CloudFormationEvent,
   callback?: LambdaCallback
@@ -236,7 +236,7 @@ async function sendResponseInternal(
  * @returns {Promise<unknown>}                       Promise that resolves with the Data or null, or rejects if an
  *   error.
  */
-export async function sendSuccess(
+async function sendSuccess(
   physicalResourceId: string,
   data: unknown,
   event: CloudFormationEvent,
@@ -267,7 +267,7 @@ export async function sendSuccess(
  * @returns {Promise<unknown>}                                Promise that resolves or rejects based on the response
  *   result.
  */
-export async function sendFailure(
+async function sendFailure(
   reason: string | Error | undefined,
   event: CloudFormationEvent,
   callback?: LambdaCallback,
@@ -295,4 +295,24 @@ export async function sendFailure(
     event,
     callback
   );
+}
+
+export {
+  configure,
+  sendResponse,
+  sendSuccess,
+  sendFailure,
+  CloudFormationEvent,
+  CloudFormationResponseDetails,
+  ConfigureOptions,
+  LambdaCallback,
+  LambdaContext,
+  SUCCESS,
+  FAILED,
+  LOG_NORMAL,
+  LOG_VERBOSE,
+  LOG_DEBUG,
+  DEFAULT_PHYSICAL_RESOURCE_ID,
+  DEFAULT_REASON_WITH_CONTEXT,
+  DEFAULT_REASON,
 }

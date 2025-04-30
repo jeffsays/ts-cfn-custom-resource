@@ -18,6 +18,15 @@
   "license": "MIT",
   "author": "Jeff Beck",
   "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "files": [
+    "!.prettierignore",
+    "./lib/*.d.ts",
+    "./lib/*.d.ts.map",
+    "./lib/*.js"
+  ],
   "scripts": {
     "build": "yarn run clean && yarn run build:license-checker && tsc",
     "build:license-checker": "license-checker --csv --out var/licenses.csv",
