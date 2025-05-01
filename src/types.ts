@@ -12,7 +12,7 @@ interface LambdaContext {
 }
 
 /** The callback signature for Lambda functions. */
-type LambdaCallback = (error: Error | null, result?: unknown) => unknown;
+type LambdaCallback = (error: Error | null, result?: unknown) => unknown | null;
 
 /** Defines the shape of CloudFormation's custom resource event object relevant to sending status back to CloudFormation. */
 interface CloudFormationEvent {
